@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Code:regular,700&display=swap");
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    font-family: "Fira Code";
+    font-size: 14px;
+}
+.wrapper{
+    width: 100vw;
+    min-height: 100vh;
+    background-color: rgba(0, 24, 75, 0.808);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.tetris-field{
+    width: 300px;
+    height: 600px;
+    background-color: #bbbbbb3f;
+    display: grid;
+    grid-template-rows: repeat(20, 1fr);
+    grid-template-columns: repeat(10, 1fr);
+}
+.cell{
+    border: 1px solid #99999911;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.figure{
+    border: none;
+    border-radius: 3px;
+    box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.8),
+    inset -2px -2px 5px black;
+}
+
+.info-field{
+    width: 100px;
+    height: 600px;
+    background-color: #bbbbbb3f;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border-left: 2px solid #999;
+}
+.info-field div{
+    text-align: center;
+}
+.next-field{
+    width: 80px;
+    height: 80px;
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.deleted{
+    animation: delete 0.25s linear forwards;
+}
+@keyframes delete {
+    0%{
+        opacity: 1;
+        transform: rotate(0) scale(1);
+    }
+    50%{
+        opacity: 0.5;
+        transform: rotate(45deg) scale(0.5);
+    }
+    100%{
+        opacity: 0;
+        transform: rotate(90deg) scale(0);
+    }
+}
+
+button{
+    cursor: pointer;
+    padding: 6px 15px;
+    background-color: rgba(0, 24, 75, 0.808);
+    border: none;
+    border-radius: 6px;
+    box-shadow: inset 3px 3px 5px rgba(255, 255, 255, 0.7),
+    inset -2px -2px 5px black;
+    color: white;
+}
+button[disabled]{
+    opacity: 0.5;
+}
+.pause img{
+    display: none;
+    animation: pause 1.5s linear infinite;
+}
+
+@keyframes pause {
+    0%{
+        opacity: 1;
+    }
+    25%{
+        opacity: 0.75;
+    }
+    50%{
+        opacity: 0.5;
+    }
+    100%{
+        opacity: 0.75;
+    }
+}
