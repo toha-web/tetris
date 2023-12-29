@@ -360,7 +360,6 @@ function moveDown() {
     }
     else{
         if(!blockMove){
-            putAudio.play();
             stopPosition();
             checkFullRows();
         }
@@ -402,6 +401,7 @@ function fallDown() {
 
 function stopPosition(){
     console.log("stop position");
+    putAudio.play();
     for(let i = 0; i < fieldRows; i++){
         for(let j = 0; j < fieldCols; j++){
             if(gameField[i][j].data === 1){
