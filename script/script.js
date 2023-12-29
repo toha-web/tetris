@@ -162,6 +162,9 @@ function startGame(){
     if(localStorage.tetrisHighScore){
         highScore = JSON.parse(localStorage.getItem("tetrisHighScore"));
     }
+    else{
+        highScore = 0;
+    }
     highScoreField.innerText = highScore.toString().padStart(9, "0")
     lines = 0;
     score = 0;
