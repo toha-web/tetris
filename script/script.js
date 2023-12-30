@@ -22,10 +22,19 @@ const levelField = document.querySelector(".level span");
 const pauseButton = document.querySelector(".pause button");
 const startButton = document.querySelector(".start button");
 const pauseImg = document.querySelector(".pause img");
+const controlBtnLeft = document.querySelector("#left");
+const controlBtnRight = document.querySelector("#right");
+const controlBtnDown = document.querySelector("#down");
+const controlBtnRotate = document.querySelector("#rotate");
 
 startButton.innerText = "Start";
 startButton.addEventListener("click", () => {
-    startGame();
+    if(!gameStatus){
+        startGame();
+    }
+    else{
+        restartGame();
+    }
 })
 
 pauseButton.innerText = "Pause";
@@ -34,12 +43,14 @@ pauseButton.addEventListener("click", () => {
     if(!pauseStatus){
         clearInterval(timerId);
         document.removeEventListener("keydown", keyHandler);
+        removeControlListeners();
         pauseStatus = true;
         pauseButton.innerText = "Resume";
         pauseImg.style.display = "block";
     }
     else{
         document.addEventListener("keydown", keyHandler);
+        addControlListeners();
         timerId = setInterval(moveDown, timerSpeed);
         pauseStatus = false;
         pauseButton.innerText = "Pause";
@@ -47,6 +58,21 @@ pauseButton.addEventListener("click", () => {
     }
     
 });
+
+function addControlListeners(){
+    controlBtnLeft.addEventListener("click", moveLeft);
+    controlBtnRight.addEventListener("click", moveRight);
+    controlBtnRotate.addEventListener("click", rotate);
+    controlBtnDown.addEventListener("click", moveDown);
+    controlBtnDown.addEventListener("dblclick", fallDown);
+}
+function removeControlListeners(){
+    controlBtnLeft.removeEventListener("click", moveLeft);
+    controlBtnRight.removeEventListener("click", moveRight);
+    controlBtnRotate.removeEventListener("click", rotate);
+    controlBtnDown.removeEventListener("click", moveDown);
+    controlBtnDown.removeEventListener("dblclick", fallDown);
+}
 
 const fieldRows = 20;
 const fieldCols = 10;
@@ -143,13 +169,11 @@ const figures = {
     ],
 };
 
-let lines, score, speed, level, highScore, timerId, gameField, prevGameField, nextField;
+let lines, score, speed, level, highScore, timerId, gameField, prevGameField, nextField, currentFigure, nextFigure;
 let timerSpeed = 700;// - speed * 50;
 let pauseStatus = false;
+let gameStatus = false;
 let blockMove = false;
-
-let currentFigure = createFigure();
-let nextFigure = createFigure();
 
 function randomColor(){return Math.floor(20 + Math.random() * 230)};
 function randomFigure(){return figureNames[Math.floor(Math.random() * 7)]};
@@ -171,6 +195,8 @@ function startGame(){
     speed = 0;
     level = 0;
     pauseButton.disabled = false;
+    currentFigure = createFigure();
+    nextFigure = createFigure();
     createField();
     createNextField();
     drawFigure(currentFigure);
@@ -180,14 +206,28 @@ function startGame(){
     speedField.innerText = speed;
     levelField.innerText = level;
     document.addEventListener("keydown", keyHandler);
+    addControlListeners();
     timerId = setInterval(moveDown, timerSpeed);
-    startButton.disabled = true;
+    gameStatus = true;
+    startButton.innerText = "Restart";
+}
+
+function restartGame() {
+    gameStatus = false;
+    clearInterval(timerId);
+    document.removeEventListener("keydown", keyHandler);
+    removeControlListeners();
+    pauseStatus = false;
+    pauseButton.innerText = "Pause";
+    pauseImg.style.display = "none";
+    startGame();
 }
 
 function gameOver(){
     gameOverAudio.play();
     clearInterval(timerId);
     document.removeEventListener("keydown", keyHandler);
+    removeControlListeners();
     pauseButton.disabled = true;
     startButton.disabled = false;
     console.log("GAME OVER");
@@ -360,6 +400,7 @@ function moveDown() {
     }
     else{
         if(!blockMove){
+            putAudio.play();
             stopPosition();
             checkFullRows();
         }
@@ -394,6 +435,7 @@ function fallDown() {
         stepFieldUpdate();
     }
     if(!blockMove){
+        putAudio.play();
         stopPosition();
         checkFullRows();
     }
@@ -401,7 +443,6 @@ function fallDown() {
 
 function stopPosition(){
     console.log("stop position");
-    putAudio.play();
     for(let i = 0; i < fieldRows; i++){
         for(let j = 0; j < fieldCols; j++){
             if(gameField[i][j].data === 1){
