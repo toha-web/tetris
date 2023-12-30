@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Fira+Code:regular,700&display=swap");
 
 :root{
-    --width: min(300px, 70vw);
+    --width: min(260px, 70vw);
     --info-width: min(100px, 30vw);
     --full-width: calc(var(--width) + var(--info-width))
 }
@@ -45,7 +45,7 @@
     border: none;
     border-radius: 3px;
     box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.8),
-    inset -2px -2px 5px black;
+    inset -2px -2px 5px rgba(0, 0, 0, 0.8), 2px 3px 8px 0px rgba(0, 0, 0, 0.7);
 }
 
 .info-field{
