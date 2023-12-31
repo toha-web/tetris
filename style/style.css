@@ -104,11 +104,11 @@
 }
 .move-btn button:first-child,
 .move-btn button:last-child{
-    top: -10px;
+    top: -15px;
 }
 .move-btn button:nth-child(2){
-    top: 13px;
-    margin: 0 3px;    
+    top: 15px;
+    margin: 0 2px;    
 }
 .move-btn button:nth-child(2) span{
     transform: rotate(90deg) scale(1.5, 2);
@@ -127,7 +127,7 @@
     color: white;
     display: flex;
     align-items: center;
-    margin-top: 3px;
+    padding: 10px 5px;
 }
 .copyright a{
     color: white;

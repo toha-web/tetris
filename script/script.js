@@ -42,14 +42,12 @@ pauseButton.disabled = true;
 pauseButton.addEventListener("click", () => {
     if(!pauseStatus){
         clearInterval(timerId);
-        document.removeEventListener("keydown", keyHandler);
         removeControlListeners();
         pauseStatus = true;
         pauseButton.innerText = "Resume";
         pauseImg.style.display = "block";
     }
     else{
-        document.addEventListener("keydown", keyHandler);
         addControlListeners();
         timerId = setInterval(moveDown, timerSpeed);
         pauseStatus = false;
@@ -60,6 +58,7 @@ pauseButton.addEventListener("click", () => {
 });
 
 function addControlListeners(){
+    document.addEventListener("keydown", keyHandler);
     controlBtnLeft.addEventListener("click", moveLeft);
     controlBtnRight.addEventListener("click", moveRight);
     controlBtnRotate.addEventListener("click", rotate);
@@ -67,6 +66,7 @@ function addControlListeners(){
     controlBtnDown.addEventListener("dblclick", fallDown);
 }
 function removeControlListeners(){
+    document.removeEventListener("keydown", keyHandler);
     controlBtnLeft.removeEventListener("click", moveLeft);
     controlBtnRight.removeEventListener("click", moveRight);
     controlBtnRotate.removeEventListener("click", rotate);
@@ -169,14 +169,30 @@ const figures = {
     ],
 };
 
-let lines, score, speed, level, highScore, timerId, gameField, prevGameField, nextField, currentFigure, nextFigure;
-let timerSpeed = 700;// - speed * 50;
+let lines, score, speed, level, highScore, timerId, gameField, prevGameField, nextField, currentFigure, nextFigure, timerSpeed, prevSpeed;
+
 let pauseStatus = false;
 let gameStatus = false;
 let blockMove = false;
 
 function randomColor(){return Math.floor(20 + Math.random() * 230)};
 function randomFigure(){return figureNames[Math.floor(Math.random() * 7)]};
+
+function speedUpdate() {
+    speed = Math.floor(score / 10000);
+    if(speed === prevSpeed || speed > 9) return;
+
+    clearInterval(timerId);
+    if(speed === 0){
+        timerSpeed = 600;
+    }
+    else if(speed <= 9){
+        timerSpeed = timerSpeed - 102 + parseInt(`${speed}0`) // to down speed - down 102
+    }
+    speedField.innerText = speed.toString();
+    prevSpeed = speed;
+    timerId = setInterval(moveDown, timerSpeed);
+}
 
 function startGame(){
     startAudio.play();
@@ -192,7 +208,6 @@ function startGame(){
     highScoreField.innerText = highScore.toString().padStart(9, "0")
     lines = 0;
     score = 0;
-    speed = 0;
     level = 0;
     pauseButton.disabled = false;
     currentFigure = createFigure();
@@ -207,7 +222,7 @@ function startGame(){
     levelField.innerText = level;
     document.addEventListener("keydown", keyHandler);
     addControlListeners();
-    timerId = setInterval(moveDown, timerSpeed);
+    speedUpdate();
     gameStatus = true;
     startButton.innerText = "Restart";
 }
@@ -545,24 +560,28 @@ function scoreCount(count){
             score += 100;
             linesField.innerText = lines.toString().padStart(6, "0");
             scoreField.innerText = score.toString().padStart(9, "0");
+            speedUpdate();
             break;
         case 2:
             lines += 2;
             score += 300;
             linesField.innerText = lines.toString().padStart(6, "0");
             scoreField.innerText = score.toString().padStart(9, "0");
+            speedUpdate();
             break;
         case 3:
             lines += 3;
             score += 600;
             linesField.innerText = lines.toString().padStart(6, "0");
             scoreField.innerText = score.toString().padStart(9, "0");
+            speedUpdate();
             break;
         case 4:
             lines += 4;
             score += 1000;
             linesField.innerText = lines.toString().padStart(6, "0");
             scoreField.innerText = score.toString().padStart(9, "0");
+            speedUpdate();
             break;
         default: return;
     }
