@@ -220,7 +220,6 @@ function startGame(){
     scoreField.innerText = score.toString().padStart(9, "0");
     speedField.innerText = speed;
     levelField.innerText = level;
-    document.addEventListener("keydown", keyHandler);
     addControlListeners();
     speedUpdate();
     gameStatus = true;
@@ -228,9 +227,8 @@ function startGame(){
 }
 
 function restartGame() {
-    gameStatus = false;
+    prevSpeed = null;
     clearInterval(timerId);
-    document.removeEventListener("keydown", keyHandler);
     removeControlListeners();
     pauseStatus = false;
     pauseButton.innerText = "Pause";
@@ -241,10 +239,8 @@ function restartGame() {
 function gameOver(){
     gameOverAudio.play();
     clearInterval(timerId);
-    document.removeEventListener("keydown", keyHandler);
     removeControlListeners();
     pauseButton.disabled = true;
-    startButton.disabled = false;
     console.log("GAME OVER");
     if(parseInt(score) > parseInt(highScore)){
         localStorage.setItem("tetrisHighScore", JSON.stringify(score));
