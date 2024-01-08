@@ -1,55 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/style.css">
-    <title>Tetris</title>
-</head>
-<body>
-    <div class="wrapper">
-        <div class="main">
-            <div class="tetris-field"></div>
-            <div class="info-field">
-                <div class="start">
-                    <button></button>
-                </div>
-                <div class="high-score">
-                    <h3>High Score</h3>
-                    <span></span>
-                </div>
-                <div class="score">
-                    <h3>Score</h3>
-                    <span></span>
-                </div>
-                <div class="lines">
-                    <h3>Lines</h3>
-                    <span></span>
-                </div>
-                <div class="next-figure">
-                    <h3>Next</h3>
-                    <div class="next-field"></div>
-                </div>
-                <div class="speed">
-                    <h3>Speed</h3>
-                    <span></span>
-                </div>
-                <div class="level">
-                    <span></span>
-                    <h3>Level</h3>
-                </div>
-                <div class="pause">
-                    <button disabled></button>
-                    <img src="./img/coffee.png" alt="Cofeecup">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./style/style.css" />
+        <title>Tetris</title>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="main">
+                <div class="tetris-field"></div>
+                <div class="info-field">
+                    <div class="start">
+                        <button></button>
+                    </div>
+                    <div class="high-score">
+                        <h3>High Score</h3>
+                        <span></span>
+                    </div>
+                    <div class="score">
+                        <h3>Score</h3>
+                        <span></span>
+                    </div>
+                    <div class="lines">
+                        <h3>Lines</h3>
+                        <span></span>
+                    </div>
+                    <div class="next-figure">
+                        <h3>Next</h3>
+                        <div class="next-field"></div>
+                    </div>
+                    <div class="speed">
+                        <h3>Speed</h3>
+                        <span></span>
+                    </div>
+                    <div class="level">
+                        <span></span>
+                        <h3>Level</h3>
+                    </div>
+                    <div class="pause">
+                        <button></button>
+                        <img src="./img/coffee.png" alt="Cofeecup" />
+                    </div>
                 </div>
             </div>
+            <div class="control">
+                <div class="move-btn">
+                    <button id="left">
+                        <div><img src="./img/left.svg" /></div></button
+                    ><button id="down">
+                        <div><img src="./img/download.svg" /></div></button
+                    ><button id="right">
+                        <div><img src="./img/right.svg" /></div>
+                    </button>
+                </div>
+                <div class="rotate-btn">
+                    <button id="rotate">
+                        <div><img src="./img/rotate.svg" /></div>
+                    </button>
+                </div>
+                <div class="sound-control">
+                    <button id="music-mute">
+                        <div><img src="./img/music-on.svg" alt="Music"></div>
+                    </button>
+                    <button id="sound-mute">
+                        <div><img src="./img/sound-on.svg" alt="Sound"></div>
+                    </button>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 Development by&nbsp;<a href="mailto:t.info@ukr.net"
+                    >Anton Biletskyi</a
+                >
+            </div>
         </div>
-        <div class="control">
-            <div class="move-btn"><button id="left"><div><img src="./img/left.svg"></div></button><button id="down"><div><img src="./img/download.svg"></div></button><button id="right"><div><img src="./img/right.svg"></div></button></div>
-            <div class="rotate-btn"><button id="rotate"><div><img src="./img/rotate.svg"></div></button></div>
-        </div>
-        <div class="copyright">&copy; 2023 Development by&nbsp;<a href="mailto:t.info@ukr.net">Anton Biletskyi</a></div>
-    </div>
-    <script src="./script/script.js"></script>
-</body>
+        <script src="./script/script.js"></script>
+    </body>
 </html>
